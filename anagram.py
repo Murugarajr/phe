@@ -1,11 +1,24 @@
-import nltk
 from collections import defaultdict
 
-wordlist = nltk.corpus.words.words('en')
-anagrams = defaultdict(list)
+word_set = defaultdict(set)
 
-anagrams = nltk.Index((''.join(sorted(w)), w) for w in wordlist)
-print("Anagrams: {}".format(anagrams["aent"]))
+# worlds list from https://www.wordgamedictionary.com/english-word-list/download/english.txt
+for word in open("english.txt"):
+    word = word.lower().strip()
+    if word:
+        word_set[frozenset(word)].add(word)
 
-# testing anagrams
-# is_anagram = lambda x1, x2: sorted(x1) == sorted(x2)
+
+def find(word):
+    return word_set[frozenset(word)]
+
+
+input_word = "rescued"
+anagram_output = find(input_word)
+print(anagram_output)
+
+is_anagram = lambda x1, x2: sorted(x1) == sorted(x2)
+# print([is_anagram(input_word, x2) for x2 in anagram_output])
+for x2 in anagram_output:
+    if is_anagram(input_word, x2):
+        print(x2)

@@ -9,7 +9,10 @@ def process(reference):
     :param reference:
     """
     for word in open(reference):
-        word = word.lower().strip()
+        try:
+            word = word.lower().strip()
+        except OSError as err:
+            print("cannot open a file {}".format(err))
         if word:
             word_set[frozenset(word)].add(word)
 
@@ -21,15 +24,17 @@ def find_anagrams(word):
     :param word:
     :return:anagrams of 'word' from the input data that were supplied
     """
-    anagram_output = word_set[frozenset(word)]
-    for anagrams in anagram_output:
-        if sorted(anagrams) == sorted(word):
-            print(anagrams)
+    try:
+        anagram_output = word_set[frozenset(word)]
+        for anagrams in anagram_output:
+            if sorted(anagrams) == sorted(word):
+                print(anagrams)
+    except Exception as err:
+        print("Please check the input {}".format(err))
 
 
 if __name__ == '__main__':
-    # words list(total=144884) from https://www.wordgamedictionary.com/english-word-list/download/english.txt is
-    # used as a input data
+    # words list(total=267751) from https://www.wordgamedictionary.com/sowpods/ is used as a input data
     data = "english.txt"
     process(reference=data)
     input_parm = input("Enter the input word to find anagrams:")

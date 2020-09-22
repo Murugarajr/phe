@@ -1,3 +1,10 @@
+"""
+Code for Anagram detection from the given input
+Author  : Raj Rengaraj
+Date    : 22 september 2020
+version : 0.1
+"""
+
 from collections import defaultdict
 
 word_set = defaultdict(set)
